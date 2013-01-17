@@ -4,9 +4,7 @@
   "description": "Simple Store for Easy Local Storage",
   "author": ["Justin Thomas <justin@chromatikmusic.com>"],
   "dependencies": {
-  	 "coffee-script":"1.4.x",
-  },
-  "devDependencies": {
+  	 "coffee-script":"1.4.x"
   },
   "engine": "node 0.8.x"
 }
