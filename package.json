@@ -1,0 +1,13 @@
+{
+  "name": "Simple-Local-Store",
+  "version": "0.5.0",
+  "description": "Simple Store for Easy Local Storage",
+  "author": ["Justin Thomas <justin@chromatikmusic.com>"],
+  "dependencies": {
+  	 "coffee-script":"1.4.x",
+  },
+  "devDependencies": {
+  },
+  "engine": "node 0.8.x"
+}
+
