@@ -1,8 +1,11 @@
-()->
+((window)->
 	store_info = {}
 	requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem
 	openDatabase = window.openDatabase || window.webkitOpenDatabase
 	indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB
+
+	isFunction = (obj)->
+		return typeof obj is 'function'
 
 	QUOTA_SIZE = 1024*1024*1024*10
 	class NoSerializer
@@ -43,10 +46,10 @@
 			success_cb = (entry)->
 				entry.createWriter (writer)->
 					writer.onwriteend = (e)->
-						cb 1
+						init_cb 1
 					writer.onerror = (e)->
 						console.log 'error'
-						cb 0
+						init_cb 0
 					blob = new Blob(['1'],{type:'text/plain'})
 					writer.write blob
 
@@ -108,7 +111,7 @@
 			serializer = @serializer
 			@get_writer key,(writer)->
 				writer.onwriteend = (e)->
-					if _.isFunction cb
+					if isFunction cb
 						cb(key)
 				writer.onerror = (e)->
 					console.log 'error',e
@@ -118,7 +121,7 @@
 			serializer = @serializer
 			@get_writer key,(writer)->
 				writer.onwriteend = (e)->
-					if _.isFunction cb
+					if isFunction cb
 						cb(key)
 				writer.onerror = (e)->
 					console.log 'error',e
@@ -170,7 +173,7 @@
 			db = @db = openDatabase(@context, '1.0', 'Chromatik DB', 1024 * 1024 * 1024);
 			db.transaction (tx)=>
 				tx.executeSql("CREATE TABLE IF NOT EXISTS \"#{@context}\" (key,value BLOB)")
-				if _.isFunction cb
+				if isFunction cb
 					cb()
 
 		enable:(cb)->
@@ -181,7 +184,7 @@
 				@db.transaction (tx)=>
 					sql = "INSERT INTO \"#{@context}\" (key,value) VALUES (\"#{key}\",\"#{obj}\")"
 					tx.executeSql sql
-					if _.isFunction cb then cb()
+					if isFunction cb then cb()
 
 		load:(key,cb)->
 			@init ()=>
@@ -219,7 +222,7 @@
 				self.initialized = store_info.initialized = true
 				db = self.db = request.result
 
-				if _.isFunction init_cb
+				if isFunction init_cb
 					init_cb()
 
 				self.execute_pending()
@@ -231,7 +234,7 @@
 			request.onsuccess = success_cb
 
 		enable:(cb)->
-			if _.isFunction(cb) then cb()
+			if isFunction(cb) then cb()
 
 		store:(key,obj,cb)->
 			@init ()=>
@@ -248,7 +251,7 @@
 				objectStore = transaction.objectStore(@context)
 				request = objectStore.get(key)
 				request.onsuccess = (event)->
-					if _.isFunction cb
+					if isFunction cb
 						cb(request.result)
 
 		remove:(key,cb)->
@@ -277,4 +280,4 @@
 	window.DatabaseLocalStore = DatabaseLocalStore
 	window.IndexedDbLocalStore = IndexedDbLocalStore
 	window.get_store = get_store
-	
+)(window)	

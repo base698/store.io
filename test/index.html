@@ -1,4 +1,42 @@
 <html>
-Hello!
+<head>
+<style>
+body {
+	margin: 0 auto;
+	padding: 100px;
+}
+h3,h4 {
+	font-family: Verdana;
+	margin: 10px;
+}
+h3 {
+	font-size: 18px;
+}
+h4 {
+	font-size: 14px;
+}
+</style>
+<script type="text/javascript" src="/dist/local_store.js"></script>
+<script>
+window.onload = function() {
+	var LocalStore = get_store();
+	var store = new LocalStore();
+	document.getElementById('header').innerHTML = "Using Store: " + LocalStore.name;
+	var key = 'SecretKey';
+	var value = navigator.userAgent;
+	store.store(key,value,function() {
+		document.getElementById('store').innerHTML = "Successfully stored: " + value + ' as key: ' + key;	
+		store.load(key,function(value) {
+			document.getElementById('load').innerHTML = "Successfully loaded: " + value;
+			
+		});
+	});
+}
+
+</script>
+</head>
+<h3 id="header"></h3>
+<h4 id="store"></h4>
+<h4 id="load"></h4>
 
 </html>
