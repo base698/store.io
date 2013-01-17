@@ -8,5 +8,5 @@ init:
 	npm install
 
 run: build
-	${COFFEE} server/server.coffee 
+	${COFFEE} server.coffee 
 
