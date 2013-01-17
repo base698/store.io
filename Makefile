@@ -1,10 +1,11 @@
 WEB_DIR			= .
 COFFEE         = ${WEB_DIR}/node_modules/coffee-script/bin/coffee
 
-build: 
+build: init 
 	${COFFEE} -o dist/ -c src/
 
-init: build
+init:
+	npm install
 
 run: build
 	${COFFEE} server/server.coffee 
