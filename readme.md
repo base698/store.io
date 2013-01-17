@@ -2,6 +2,9 @@
 
 Simple Local Store is a lightweight way to use local storage in multiple browsers.
 
+##
+Browsers supported:  Firefox, Chrome, Safari
+
 ## How to Install
     npm build 
 	 copy `dist/local_store.js` to the directory you wish to use it.
