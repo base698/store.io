@@ -1,6 +1,6 @@
-# Simple Local Store 
+# Store.IO
 
-Simple Local Store is a lightweight way to use local storage in multiple browsers.
+Store.IO is a lightweight way to use local storage in multiple browsers.
 
 ##
 Browsers supported:  Firefox, Chrome, Safari
