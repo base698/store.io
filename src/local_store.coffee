@@ -181,10 +181,11 @@
 
 		store:(key,obj,cb)->
 			@init ()=>
-				@db.transaction (tx)=>
-					sql = "INSERT INTO \"#{@context}\" (key,value) VALUES (\"#{key}\",\"#{obj}\")"
-					tx.executeSql sql
-					if isFunction cb then cb()
+				@remove key,()=>
+					@db.transaction (tx)=>
+						sql = "INSERT INTO \"#{@context}\" (key,value) VALUES (\"#{key}\",\"#{obj}\")"
+						tx.executeSql sql
+						if isFunction cb then cb()
 
 		load:(key,cb)->
 			@init ()=>
@@ -199,7 +200,8 @@
 		remove:(key,cb)->
 			@init ()=>
 				@db.transaction (tx) =>
-					tx.executeSql("DELETE FROM \"#{@context}\" where key=\"#{key}\"")
+					tx.executeSql "DELETE FROM \"#{@context}\" WHERE key=\"#{key}\"",[],()->
+						if isFunction cb then cb()
 
 		has:(key,cb)->
 			self = @
